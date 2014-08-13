@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 // I've Changed the code!!!!!
+// SO HAVE I!!!!!
 namespace HangMan_Console
 {
     public class GameLoop

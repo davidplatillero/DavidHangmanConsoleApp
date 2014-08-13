@@ -4,3 +4,9 @@ c:\Users\david.platillero\documents\visual studio 2012\Projects\HangJohn\HangMan
 c:\Users\david.platillero\documents\visual studio 2012\Projects\HangJohn\HangMan_Console\obj\Debug\HangMan_Console.exe
 c:\Users\david.platillero\documents\visual studio 2012\Projects\HangJohn\HangMan_Console\obj\Debug\HangMan_Console.pdb
 c:\Users\david.platillero\documents\visual studio 2012\Projects\HangJohn\HangMan_Console\obj\Debug\HangMan_Console.csprojResolveAssemblyReference.cache
+C:\Users\dylan.snowden\Documents\Programming\HangmanConsoleApp\bin\Debug\HangMan_Console.exe.config
+C:\Users\dylan.snowden\Documents\Programming\HangmanConsoleApp\bin\Debug\HangMan_Console.exe
+C:\Users\dylan.snowden\Documents\Programming\HangmanConsoleApp\bin\Debug\HangMan_Console.pdb
+C:\Users\dylan.snowden\Documents\Programming\HangmanConsoleApp\obj\Debug\HangMan_Console.csprojResolveAssemblyReference.cache
+C:\Users\dylan.snowden\Documents\Programming\HangmanConsoleApp\obj\Debug\HangMan_Console.exe
+C:\Users\dylan.snowden\Documents\Programming\HangmanConsoleApp\obj\Debug\HangMan_Console.pdb
