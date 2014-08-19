@@ -8,14 +8,15 @@ namespace HangMan_Console
 {
     public class NewGame
     {
-        public Word myWord = new Word();
-        public DataBase wordDB = new DataBase("words.txt");
+        private readonly IDataBase _database;
 
-        public void InitializeGame()
+        public NewGame(IDataBase database)
         {
-            wordDB.fillDataBase();
-            myWord.setRandomWord(wordDB);
+            _database = database;
+            _database.fillDataBase();
+            TheWord = _database.getRandomWord();
         }
-            
+
+        public string TheWord {  get; set; }
     }
 }

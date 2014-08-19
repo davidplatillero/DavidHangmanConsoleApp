@@ -1,31 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace HangMan_Console
 {
-    public class DataBase
+    public interface IDataBase
     {
-        public string[] wordDataBase;
-        public string file;
+        void fillDataBase();
+        string getRandomWord();
+    }
+
+    public class DataBase : IDataBase
+    {
+        public string File;
+        public string[] WordDataBase;
+        public List<string> bigWordDataBase = new List<string>();
 
         public DataBase(string filename)
         {
-            file = filename;
+            File = filename;
         }
 
         public void fillDataBase()
         {
-            char[] delimiterChars = { ' ', '\t' };
-            string temp = System.IO.File.ReadAllText(file);
+            char[] delimiterChars = {' ', '.', '\t', '\r', '\n', ':'};
 
-            wordDataBase = temp.Split(delimiterChars);
+            string temp = System.IO.File.ReadAllText(File);
+
+            var matches = Regex.Matches(temp, @"([a-z]+)", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+
+            WordDataBase = temp.Split(delimiterChars);
+
+            foreach (var word in matches.Cast<object>().Select(match => match.ToString()).Where(word => word.Length > 3))
+            {
+                if(!bigWordDataBase.Contains(word))
+                    bigWordDataBase.Add(word);
+            }
         }
+
         public string getRandomWord()
         {
-            return wordDataBase[new Random().Next(0, wordDataBase.Length)];
+            return bigWordDataBase[new Random().Next(0, bigWordDataBase.Count)];
         }
     }
 }

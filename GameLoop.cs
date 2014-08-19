@@ -3,113 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-// I've Changed the code!!!!!
+using System.Media;
+
 namespace HangMan_Console
 {
     public class GameLoop
     {
         public void Start(NewGame game)
         {
-            //Display GameGUI = new Display();
-            //Display.updateDisplay();
+            var gameState = new GameState(game.TheWord);
+            var guessValidator = new GuessValidator();
+            var display = new Display();
 
-            //bool done = false;
-            //while(!done)
-            //{
+            Console.WriteLine("Welcome to Hangman! \nThe word is {0} letters long. \nMake your best guess!", gameState.TheWord.Length);
 
-            //Menu titlescreen = new Menu()
+            //Console.WriteLine("     0 \n    -|- \n    / \\   ");
 
-            //Menu.Start()
+            SoundPlayer player = new SoundPlayer(@"C:\Users\david.platillero\Documents\Visual Studio 2012\Projects\HangJohn\HangMan_Console\POL-cactus-land-short.wav");
+            player.PlayLooping();
 
-
-
-
-            string tempinput = "";
-            string lettersUsed = "";
-            string message = "";
-
-            int guessesLeft = 5;
             bool done = false;
-            string _theword = game.myWord.theWord;
-
-            StringBuilder sbBlanks = new StringBuilder();
-            for (int i = 0; i < _theword.Length; i++)
-            {
-                sbBlanks.Append("_");
-            }
-
-            Console.WriteLine("Welcome to Hangman! The word is {0} letters long. Make your best guess!", _theword.Length);
-
             while (!done)
             {
+                Console.Write("Guess: ");
+                var currentGuess = Console.ReadLine();
                 
-                Console.WriteLine(message);
-                Console.WriteLine("word: {0}", _theword);
-                Console.WriteLine(" {0}", sbBlanks.ToString() );
-                Console.WriteLine("Previous Guesses: {0}", lettersUsed);
-                Console.WriteLine("Guesses Left: {0}", guessesLeft +1);
-                Console.WriteLine("Guess: ");
-
-                tempinput = Console.ReadLine();
-                if (tempinput.Length < 1)
+                if(!guessValidator.Valid(currentGuess))
                 {
-                    Console.Clear();
+                    Console.WriteLine("Not a valid input");
                     continue;
                 }
-                tempinput = tempinput[0].ToString();
 
-                if (lettersUsed.Contains(tempinput))
-                {
-                    message = "Already guessed that!";
-                    
-                }
-
-                else if (_theword.Contains(tempinput))
-                {
-                    message = "YAY";
-                    lettersUsed += tempinput;
-                    int letterindex = 0;
-                    //var indeces = new List<int>;
-
-                    for (int i = 0; i < _theword.Length; i++)
-                    {
-
-                        letterindex = _theword.IndexOf(tempinput, i);
-                        if (letterindex >= 0)
-                        {
-                            i = letterindex;
-                            sbBlanks[i] = tempinput[0];
-                        }
-                    }
-
-                    if (!sbBlanks.ToString().Contains("_"))
-                    {
-                       // Console.Clear();
-                        Console.WriteLine("You win!!!");
-                        done = true;
-                        break;
-                    }
-                    
-                }
-                else
-                {
-                    
-                    message = "BOO";
-                    lettersUsed += tempinput;
-                    
-                    Console.WriteLine("Guesses Left: {0}", guessesLeft);
-
-                    if (guessesLeft == 0)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("You lose!!");
-                        done = true;
-                        break;
-                    }
-                    guessesLeft--;
-                }
+                currentGuess = guessValidator.getValidatedString(currentGuess);
+                var whatHappened = gameState.ProcessGuess(currentGuess);
                 Console.Clear();
 
+                switch (whatHappened)
+                {
+                    case WhatHappened.Correct:
+                        Console.WriteLine("Correct!");
+                        break;
+                    case WhatHappened.Duplicate:
+                        Console.WriteLine("You already guessed that!");
+                        break;
+                    case WhatHappened.Incorrect:
+                        Console.WriteLine("Bummer... that's not in the word!");
+                        break;
+                    case WhatHappened.Lose:
+                        Console.WriteLine("You Lose :( \nThe word was {0} \n{1}",gameState.TheWord, display.FullMan);
+                        done = true;
+                        break;
+                    case WhatHappened.Win:
+                        Console.WriteLine("You Win! :) \nThe word was {0}",gameState.TheWord);
+                        done = true;
+                        break;
+                }
+                
+                if(!done)
+                display.Update(gameState);
             }
 
             Console.ReadLine();

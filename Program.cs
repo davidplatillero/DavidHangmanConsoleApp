@@ -13,11 +13,7 @@ namespace HangMan_Console
             GameController game = new GameController();
             game.Start();
 
-            //NewGame myGame = new NewGame();
-            //myGame.InitializeGame();
-            //myGame.GameLoop();
-
-            System.Console.ReadLine();
+            //System.Console.ReadLine();
         }
     }
 }

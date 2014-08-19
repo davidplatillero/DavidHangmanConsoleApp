@@ -8,17 +8,24 @@ namespace HangMan_Console
 {
     public class Display
     {
-        Stats displayStats = new Stats();
+        private readonly Man _man;
 
-        public Display(Stats gameStats)
+        public string FullMan
         {
-            displayStats = gameStats;
+            get { return _man.ReturnMan(0); }
         }
 
-        public void update()
+        public Display()
         {
-            Console.Clear();
-            Console.WriteLine(displayStats.guessesLeft);
+            _man = new Man();
+        }
+
+        public void Update(GameState gameState)
+        {
+            Console.WriteLine(" {0}", gameState.DisplayBlanks);
+            Console.WriteLine("Previous Guesses: {0}", gameState.PreviousGuesses);
+            Console.WriteLine("Guesses Left: {0}", gameState.GuessesLeft);
+            Console.WriteLine(_man.ReturnMan(gameState.GuessesLeft));
         }
     }
 }
